@@ -11,12 +11,13 @@ int	main(int argc, char **argv)
 	char *str;
 
 	str = "god mode";
+	fd = open(argv[1], O_RDONLY);
 	while (str)
 	{
-		str = get_next_line(0);
+		str = get_next_line(fd);
 		printf("line : %s", str);
 		free(str);
 	}
 	close (fd);
-	return (0);
+	return (1);
 }

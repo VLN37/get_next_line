@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_backup.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jofelipe <jofelipe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/07 01:30:37 by jofelipe          #+#    #+#             */
-/*   Updated: 2021/08/10 15:48:36 by jofelipe         ###   ########.fr       */
+/*   Updated: 2021/08/10 15:32:36 by jofelipe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,10 +125,8 @@ void	writewithprotec(char **old, char **new, char *buf, int i)
 	}
 }
 
-void	writefullbuf(char **old, char **new, char *buf, int *size)
+void	writefullbuf(char **old, char **new, char *buf)
 {
-	if (ft_strnchr(buf, BUFFER_SIZE, '\n'))
-		*size = 0;
 	if (!*new)
 		*new = ft_strjoin(buf, "");
 	else
@@ -140,12 +138,10 @@ void	writefullbuf(char **old, char **new, char *buf, int *size)
 	ft_bzero(buf, BUFFER_SIZE);
 }
 
-void	writepartialbuf(char **old, char **new, char *buf, int *size)
+void	writepartialbuf(char **old, char **new, char *buf)
 {
 	int	i;
 
-	if (ft_strnchr(buf, BUFFER_SIZE, '\n') && *size < 2147483647)
-		*size = 0;
 	i = 0;
 	while (buf[i] != '\n' && buf[i])
 		++i;
@@ -162,10 +158,12 @@ char	*get_next_line(int fd)
 	char		*old;
 	int			size;
 
-	size = 2147483647;
+	if (fd  == -1);
+		return (NULL);
+	size = 1;
 	new = NULL;
 	if (*buf)
-		writepartialbuf(&old, &new, buf, &size);
+		writepartialbuf(&old, &new, buf);
 	else
 		ft_bzero(buf, BUFFER_SIZE);
 	if (ft_strnchr(new, ft_strlen(new), '\n'))
@@ -176,11 +174,13 @@ char	*get_next_line(int fd)
 		if (size == -1)
 			return (NULL);
 		if (size == BUFFER_SIZE && !ft_strnchr(buf, BUFFER_SIZE, '\n'))
-			writefullbuf(&old, &new, buf, &size);
+			writefullbuf(&old, &new, buf);
 		else if (size == BUFFER_SIZE && ft_strnchr(buf, BUFFER_SIZE, '\n'))
-			writepartialbuf(&old, &new, buf, &size);
+			writepartialbuf(&old, &new, buf);
 		else if (size)
-			writepartialbuf(&old, &new, buf, &size);
+			writepartialbuf(&old, &new, buf);
+		if (ft_strnchr(new, ft_strlen(new), '\n'))
+			size = 0;
 	}
 	return (new);
 }
