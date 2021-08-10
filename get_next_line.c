@@ -6,19 +6,19 @@
 /*   By: jofelipe <jofelipe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/07 01:30:37 by jofelipe          #+#    #+#             */
-/*   Updated: 2021/08/09 00:46:13 by jofelipe         ###   ########.fr       */
+/*   Updated: 2021/08/10 10:00:50 by jofelipe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //read the command line and extract the global variable
 //
-//program reads from fd into buffer
+//program reads from fd into buf
 //returns the string when you find \n
 
-//read the buffer
+//read the buf
 //allocate it with strjoin
 //put the rest in a global variable if necessary
-//keep reading the buffer
+//keep reading the buf
 //check if strchr
 
 // is 0 a byte read?
@@ -29,6 +29,8 @@
 
 char	*ft_strnchr(const char *str, int len, int c)
 {
+	if (!str)
+		return (NULL);
 	while (*str && len--)
 	{
 		if (*str == (char)c)
@@ -44,6 +46,8 @@ size_t	ft_strlen(const char *str)
 {
 	int	i;
 
+	if (!str)
+		return (0);
 	i = 0;
 	while (str[i])
 		i++;
@@ -99,64 +103,81 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	return (ptr);
 }
 
-void	writefullbuffer(char **old, char **new, char *buffer)
+void	writefullbuf(char **old, char **new, char *buf)
 {
 	if (!*new)
-		*new = ft_strjoin(buffer, "");
+		*new = ft_strjoin(buf, "");
 	else
 	{
 		*old = *new;
-		*new = ft_strjoin(*old, buffer);
+		*new = ft_strjoin(*old, buf);
 		free(*old);
 	}
-	ft_bzero(buffer, 42);
+	ft_bzero(buf, 42);
 }
 
-void	writepartialbuffer(char **old, char **new, char *buffer)
+void	writewithprotec(char **old, char **new, char *buf, int i)
+{
+	char	holder;
+
+	if (!*new)
+	{
+		holder = buf[i + 1];
+		buf[i + 1] = '\0';
+		*new = ft_strjoin(buf, "");
+		buf[i + 1] = holder;
+	}
+	else
+	{
+		*old = *new;
+		holder = buf[i + 1];
+		buf[i + 1] = '\0';
+		*new = ft_strjoin(*old, buf);
+		buf[i + 1] = holder;
+		free(*old);
+	}
+}
+
+void	writepartialbuf(char **old, char **new, char *buf)
 {
 	int	i;
 
 	i = 0;
-	while (buffer[i] != '\n')
-		i++;
-	if (!*new)
-		ft_strjoin(buffer, "");
-	else
-	{
-		*old = *new;
-		*new = ft_strjoin(*old, buffer);
-		free(*old);
-	}
-	ft_memmove(buffer, &buffer[i], BUFFER_SIZE - i);
-	buffer[BUFFER_SIZE - i] = '\0';
-	printf("\npartial: %s\n", buffer);
+	while (buf[i] != '\n' && buf[i])
+		++i;
+	writewithprotec(old, new, buf, i);
+	++i;
+	ft_memmove(buf, &buf[i], BUFFER_SIZE - i);
+	ft_bzero(&buf[BUFFER_SIZE - i], BUFFER_SIZE - (BUFFER_SIZE - i));
 }
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[BUFFER_SIZE];
+	static char	buf[BUFFER_SIZE];
 	char		*new;
 	char		*old;
 	int			size;
 
 	size = 1;
 	new = NULL;
-	if (*buffer)
-		new = ft_strjoin(buffer, "");
-	ft_bzero(buffer, BUFFER_SIZE);
-	while (size)
-	{
-		size = read(fd, buffer, BUFFER_SIZE);
-		buffer[size] = 0;
-		if (size == BUFFER_SIZE && !ft_strnchr(buffer, BUFFER_SIZE, '\n'))
-			writefullbuffer(&old, &new, buffer);
-		else if (size == BUFFER_SIZE && ft_strnchr(buffer, BUFFER_SIZE, '\n'))
-			writepartialbuffer(&old, &new, buffer);
-		else if (size < BUFFER_SIZE && ft_strnchr(buffer, BUFFER_SIZE, '\n'))
-			writepartialbuffer(&old, &new, buffer);
-	}
-	if (new)
-		return (new);
+	if (*buf)
+		writepartialbuf(&old, &new, buf);
 	else
-		return (NULL);
+		ft_bzero(buf, BUFFER_SIZE);
+	if (ft_strnchr(new, ft_strlen(new), '\n'))
+		size = 0;
+	while (size && !*buf)
+	{
+		size = read(fd, buf, BUFFER_SIZE);
+		buf[size] = 0;
+		if (size == BUFFER_SIZE && !ft_strnchr(buf, BUFFER_SIZE, '\n'))
+			writefullbuf(&old, &new, buf);
+		else if (size == BUFFER_SIZE && ft_strnchr(buf, BUFFER_SIZE, '\n'))
+			writepartialbuf(&old, &new, buf);
+		else if (size && ft_strnchr(buf, BUFFER_SIZE, '\n'))
+			writepartialbuf(&old, &new, buf);
+		if (ft_strnchr(new, ft_strlen(new), '\n'))
+			size = 0;
+	}
+	return (new);
 }
