@@ -6,7 +6,7 @@
 /*   By: jofelipe <jofelipe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/07 01:24:41 by jofelipe          #+#    #+#             */
-/*   Updated: 2021/08/14 18:54:51 by jofelipe         ###   ########.fr       */
+/*   Updated: 2021/08/14 20:46:30 by jofelipe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define BUFFER_SIZE 12
 #endif
 
-#define MAX_FD 255
+#define MAX_FD 100
 
 #include <stdlib.h>
 

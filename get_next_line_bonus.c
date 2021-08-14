@@ -6,7 +6,7 @@
 /*   By: jofelipe <jofelipe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/07 01:30:37 by jofelipe          #+#    #+#             */
-/*   Updated: 2021/08/14 19:50:27 by jofelipe         ###   ########.fr       */
+/*   Updated: 2021/08/14 20:42:39 by jofelipe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,11 +158,13 @@ void	writepartialbuf(char **old, char **new, char *buf, int *size)
 
 char	*get_next_line(int fd)
 {
-	static char	buf[MAX_FD][BUFFER_SIZE];
+	static char	buf[MAX_FD + 1][BUFFER_SIZE + 1];
 	char		*new;
 	char		*old;
 	int			size;
 
+	if (fd > MAX_FD || fd < 0)
+		return (NULL);
 	size = 2147483647;
 	new = NULL;
 	if (*buf[fd])
