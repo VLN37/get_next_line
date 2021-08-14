@@ -6,7 +6,7 @@
 /*   By: jofelipe <jofelipe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/07 01:30:37 by jofelipe          #+#    #+#             */
-/*   Updated: 2021/08/11 12:56:54 by jofelipe         ###   ########.fr       */
+/*   Updated: 2021/08/14 19:50:27 by jofelipe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,61 +103,62 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	return (ptr);
 }
 
-void	writewithprotec(char **old, char **new, char *buf, int i, int fd)
+void	writewithprotec(char **old, char **new, char *buf, int i)
 {
 	char	holder;
 
 	if (!*new)
 	{
-		holder = buf[fd][i + 1];
-		buf[fd][i + 1] = '\0';
-		*new = ft_strjoin(buf[fd], "");
-		buf[fd][i + 1] = holder;
+		holder = buf[i + 1];
+		buf[i + 1] = '\0';
+		*new = ft_strjoin(buf, "");
+		buf[i + 1] = holder;
 	}
 	else
 	{
 		*old = *new;
-		holder = buf[fd][i + 1];
-		buf[fd][i + 1] = '\0';
-		*new = ft_strjoin(*old, buf[fd]);
-		buf[fd][i + 1] = holder;
+		holder = buf[i + 1];
+		buf[i + 1] = '\0';
+		*new = ft_strjoin(*old, buf);
+		buf[i + 1] = holder;
 		free(*old);
 	}
 }
 
-void	writefullbuf(char **old, char **new, char *buf, int *size, int fd)
+void	writefullbuf(char **old, char **new, char *buf, int *size)
 {
-	if (ft_strnchr(buf[fd], BUFFER_SIZE, '\n'))
+	if (ft_strnchr(buf, BUFFER_SIZE, '\n'))
 		*size = 0;
 	if (!*new)
-		*new = ft_strjoin(buf[fd], "");
+		*new = ft_strjoin(buf, "");
 	else
 	{
 		*old = *new;
-		*new = ft_strjoin(*old, buf[fd]);
+		*new = ft_strjoin(*old, buf);
 		free(*old);
 	}
-	ft_bzero(buf[fd], BUFFER_SIZE);
+	ft_bzero(buf, BUFFER_SIZE);
 }
 
-void	writepartialbuf(char **old, char **new, char *buf, int *size, int fd)
+void	writepartialbuf(char **old, char **new, char *buf, int *size)
 {
 	int	i;
 
-	if (ft_strnchr(buf[fd], BUFFER_SIZE, '\n') && *size < 2147483647)
+	if (ft_strnchr(buf, BUFFER_SIZE, '\n') && *size < 2147483647)
 		*size = 0;
 	i = 0;
-	while (buf[fd][i] != '\n' && buf[fd][i])
+	while (buf[i] != '\n' && buf[i])
 		++i;
-	writewithprotec(old, new, buf, i, fd);
+	writewithprotec(old, new, buf, i);
 	++i;
-	ft_memmove(buf[fd][0], &buf[fd][i], BUFFER_SIZE - i);
-	ft_bzero(&buf[fd][BUFFER_SIZE - i], BUFFER_SIZE - (BUFFER_SIZE - i));
+	ft_memmove(&buf[0], &buf[i], BUFFER_SIZE - i);
+	ft_bzero(&buf[BUFFER_SIZE - i], BUFFER_SIZE - (BUFFER_SIZE - i));
 }
+
 
 char	*get_next_line(int fd)
 {
-	static char	buf[254][BUFFER_SIZE];
+	static char	buf[MAX_FD][BUFFER_SIZE];
 	char		*new;
 	char		*old;
 	int			size;
@@ -165,22 +166,18 @@ char	*get_next_line(int fd)
 	size = 2147483647;
 	new = NULL;
 	if (*buf[fd])
-		writepartialbuf(&old, &new, buf[fd], &size, fd);
+		writepartialbuf(&old, &new, buf[fd], &size);
 	else
 		ft_bzero(buf[fd], BUFFER_SIZE);
-	if (ft_strnchr(new, ft_strlen(new), '\n'))
-		size = 0;
 	while (size && !*buf[fd])
 	{
 		size = read(fd, buf[fd], BUFFER_SIZE);
 		if (size == -1)
 			return (NULL);
 		if (size == BUFFER_SIZE && !ft_strnchr(buf[fd], BUFFER_SIZE, '\n'))
-			writefullbuf(&old, &new, buf[fd], &size, fd);
-		else if (size == BUFFER_SIZE && ft_strnchr(buf[fd], BUFFER_SIZE, '\n'))
-			writepartialbuf(&old, &new, buf[fd], &size, fd);
+			writefullbuf(&old, &new, buf[fd], &size);
 		else if (size)
-			writepartialbuf(&old, &new, buf[fd], &size, fd);
+			writepartialbuf(&old, &new, buf[fd], &size);
 	}
 	return (new);
 }

@@ -11,7 +11,7 @@ int	main(int argc, char **argv)
 	char *str;
 
 	str = "god mode";
-	fd = open(argv[1], O_RDONLY);
+	fd = 0;
 	while (str)
 	{
 		str = get_next_line(fd);
