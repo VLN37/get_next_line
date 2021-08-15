@@ -6,7 +6,7 @@
 /*   By: jofelipe <jofelipe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 08:23:16 by jofelipe          #+#    #+#             */
-/*   Updated: 2021/08/14 21:08:01 by jofelipe         ###   ########.fr       */
+/*   Updated: 2021/08/15 14:58:56 by jofelipe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,6 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	return (ptr);
 }
 
-void	ft_bzero(void *ptr, size_t len)
-{
-	while (len-- > 0)
-		*(char *)ptr++ = 0;
-}
-
 size_t	ft_strlen(const char *str)
 {
 	int	i;
@@ -62,6 +56,8 @@ char	*ft_strnchr(const char *str, int len, int c)
 	{
 		if (*str == (char)c)
 			return ((char *)str);
+		if (*str == '\0')
+			return (NULL);
 		str++;
 	}
 	return (NULL);

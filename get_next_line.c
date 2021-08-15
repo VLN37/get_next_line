@@ -6,7 +6,7 @@
 /*   By: jofelipe <jofelipe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/07 01:30:37 by jofelipe          #+#    #+#             */
-/*   Updated: 2021/08/15 13:55:37 by jofelipe         ###   ########.fr       */
+/*   Updated: 2021/08/15 15:00:11 by jofelipe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,7 @@
 //keep reading the buf
 //check if strchr
 
-// is 0 a byte read?
-
 #include "get_next_line.h"
-#include <unistd.h>
-#include <stdio.h>
 
 void	writewithprotec(char **old, char **new, char *buf, int i)
 {
@@ -59,7 +55,7 @@ void	writefullbuf(char **old, char **new, char *buf)
 		*new = ft_strjoin(*old, buf);
 		free(*old);
 	}
-	ft_bzero(buf, BUFFER_SIZE);
+	buf[0] = '\0';
 }
 
 void	writepartialbuf(char **old, char **new, char *buf, int *size)
@@ -74,7 +70,7 @@ void	writepartialbuf(char **old, char **new, char *buf, int *size)
 	writewithprotec(old, new, buf, i);
 	++i;
 	ft_memmove(buf, &buf[i], BUFFER_SIZE - i);
-	ft_bzero(&buf[BUFFER_SIZE - i], BUFFER_SIZE - (BUFFER_SIZE - i));
+	buf[BUFFER_SIZE - i] = '\0';
 }
 
 char	*get_next_line(int fd)

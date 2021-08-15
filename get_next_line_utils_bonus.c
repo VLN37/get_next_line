@@ -6,7 +6,7 @@
 /*   By: jofelipe <jofelipe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 21:20:33 by jofelipe          #+#    #+#             */
-/*   Updated: 2021/08/14 21:20:38 by jofelipe         ###   ########.fr       */
+/*   Updated: 2021/08/15 14:23:45 by jofelipe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ char	*ft_strnchr(const char *str, int len, int c)
 {
 	if (!str)
 		return (NULL);
-	while (*str && len--)
+	while (len--)
 	{
 		if (*str == (char)c)
 			return ((char *)str);
+		if (*str == '\0')
+			return (NULL);
 		str++;
 	}
-	if (*str == (char)c)
-		return ((char *)str);
 	return (NULL);
 }
 
@@ -56,12 +56,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		*res++ = *s2++;
 	*res = 0;
 	return (res - size);
-}
-
-void	ft_bzero(void *ptr, size_t len)
-{
-	while (len-- > 0)
-		*(char *)ptr++ = 0;
 }
 
 void	*ft_memmove(void *dest, const void *src, size_t n)

@@ -6,7 +6,7 @@
 /*   By: jofelipe <jofelipe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/07 01:24:41 by jofelipe          #+#    #+#             */
-/*   Updated: 2021/08/15 13:09:49 by jofelipe         ###   ########.fr       */
+/*   Updated: 2021/08/15 14:58:01 by jofelipe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # endif
 
 # include <stdlib.h>
+# include <unistd.h>
 
 void	*ft_memmove(void *dest, const void *src, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2);
