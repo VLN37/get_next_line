@@ -7,8 +7,8 @@
 
 int	main(int argc, char **argv)
 {
-	int	fd;
-	char *str;
+	int		fd;
+	char	*str;
 
 	str = "god mode";
 	fd = 0;

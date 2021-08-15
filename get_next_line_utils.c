@@ -6,7 +6,7 @@
 /*   By: jofelipe <jofelipe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 08:23:16 by jofelipe          #+#    #+#             */
-/*   Updated: 2021/08/12 08:24:06 by jofelipe         ###   ########.fr       */
+/*   Updated: 2021/08/14 21:08:01 by jofelipe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ char	*ft_strnchr(const char *str, int len, int c)
 			return ((char *)str);
 		str++;
 	}
-
 	return (NULL);
 }
 

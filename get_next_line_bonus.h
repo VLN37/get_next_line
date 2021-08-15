@@ -6,7 +6,7 @@
 /*   By: jofelipe <jofelipe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/07 01:24:41 by jofelipe          #+#    #+#             */
-/*   Updated: 2021/08/14 20:46:30 by jofelipe         ###   ########.fr       */
+/*   Updated: 2021/08/14 21:11:24 by jofelipe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,14 @@
 # define BUFFER_SIZE 12
 #endif
 
-#define MAX_FD 100
-
 #include <stdlib.h>
+#define MAX_FD 110
 
-char *get_next_line(int fd);
+void	*ft_memmove(void *dest, const void *src, size_t n);
+char	*ft_strjoin(char const *s1, char const *s2);
+size_t	ft_strlen(const char *str);
+char	*ft_strnchr(const char *str, int len, int c);
+void	ft_bzero(void *ptr, size_t len);
+char	*get_next_line(int fd);
 
 #endif
