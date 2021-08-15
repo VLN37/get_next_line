@@ -6,7 +6,7 @@
 /*   By: jofelipe <jofelipe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/07 01:30:37 by jofelipe          #+#    #+#             */
-/*   Updated: 2021/08/15 11:54:27 by jofelipe         ###   ########.fr       */
+/*   Updated: 2021/08/15 13:55:37 by jofelipe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ char	*get_next_line(int fd)
 	while (size)
 	{
 		size = read(fd, buf, BUFFER_SIZE);
-		buf[size] = '\0';
 		if (size == -1)
 			return (NULL);
+		buf[size] = '\0';
 		if (size == BUFFER_SIZE && !ft_strnchr(buf, BUFFER_SIZE, '\n'))
 			writefullbuf(&old, &new, buf);
 		else if (size)

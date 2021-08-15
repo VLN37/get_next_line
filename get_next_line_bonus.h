@@ -6,19 +6,19 @@
 /*   By: jofelipe <jofelipe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/07 01:24:41 by jofelipe          #+#    #+#             */
-/*   Updated: 2021/08/14 21:11:24 by jofelipe         ###   ########.fr       */
+/*   Updated: 2021/08/15 13:10:02 by jofelipe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 12
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 12
+# endif
 
-#include <stdlib.h>
-#define MAX_FD 110
+# include <stdlib.h>
+# define MAX_FD 110
 
 void	*ft_memmove(void *dest, const void *src, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2);
