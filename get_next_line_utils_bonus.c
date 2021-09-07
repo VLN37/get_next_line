@@ -6,11 +6,11 @@
 /*   By: jofelipe <jofelipe@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 21:20:33 by jofelipe          #+#    #+#             */
-/*   Updated: 2021/08/15 14:23:45 by jofelipe         ###   ########.fr       */
+/*   Updated: 2021/09/06 21:15:11 by jofelipe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_strnchr(const char *str, int len, int c)
 {
