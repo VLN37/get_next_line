@@ -8,11 +8,11 @@ This project introduces us to a few new concepts, such as file descriptors. stat
 
 ### My badge
 
-![libft badge](/docs/gnlbadge)
+![libft badge](/docs/gnlbadge.png)
 
 ### My grade
 
-![libft grade](/docs/gnlgrade)
+![libft grade](/docs/gnlgrade.png)
 
 ### How to use
 
