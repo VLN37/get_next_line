@@ -10,12 +10,12 @@ int	main(int argc, char **argv)
 	int		fd;
 	char	*str;
 
-	str = "god mode";
+	str = "gnl online!";
 	fd = 0;
 	while (str)
 	{
 		str = get_next_line(fd);
-		printf("line : %s", str);
+		printf("%s", str);
 		free(str);
 	}
 	close (fd);
